@@ -1,0 +1,20 @@
+GET http://localhost:8082/hourse/test
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8082/hourse/test
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:8082/test
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-05-12T021044.404.json
+
+###
+

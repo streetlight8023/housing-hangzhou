@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangtan.hourse.dao.HzZoneStaticMapper">
+
+    <insert id="insert" parameterType="com.fangtan.hourse.domain.HzZoneStatic" >
+    insert into hz_zone_static (zone, count, deal_type, create_time, update_time)
+    values (#{zone,jdbcType=VARCHAR},
+         #{count,jdbcType=INTEGER},
+         #{dealType,jdbcType=VARCHAR},
+          now(),
+          now())
+  </insert>
+
+
+    <select id="findAll" resultType="com.fangtan.hourse.domain.HzZoneStatic">
+        SELECT * from hz_zone_static order by id desc limit 100
+    </select>
+
+
+</mapper>

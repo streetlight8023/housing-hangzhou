@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，
+	  如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。
+	  Logback是log4j框架的作者开发的新一代日志框架，它效率更高、能够适应诸多的运行环境，同时天然支持SLF4J。SpringBoot默认使用Logback
+
+	    控制台输出
+	   日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出
+	   Spring Boot中默认配置ERROR、WARN和INFO级别的日志输出到控制台。您还可以通过启动您的应用程序–debug标志来启用“调试”模式（开发的时候推荐开启）,以下两种方式皆可：
+		1. 在运行命令后加入(两个-)-debug标志，如：$ java -jar springTest.jar -debug
+		2. 在application.properties中配置debug=true，该属性置为true的时候，核心Logger（包含嵌入式容器、hibernate、spring）会输出更多内容，但是你自己应用的日志并不会输出为DEBUG级别
+
+		文件输出
+        默认情况下，Spring Boot将日志输出到控制台，不会写到日志文件。如果要编写除控制台输出之外的日志文件，则需在application.properties中设置logging.file或logging.path属性。
+		logging.file，设置文件，可以是绝对路径，也可以是相对路径。如：logging.file=log/my.log(相对)或者/log/my.log(绝对)
+		logging.path，设置目录，会在该目录下创建spring.log文件，并写入日志内容，如：logging.path=/var/log
+		如果只配置 logging.file，会在项目的当前路径下生成一个 xxx.log 日志文件。
+		如果只配置 logging.path，在 /var/log文件夹生成一个日志文件为 spring.log
+		注：二者不能同时使用，如若同时使用，则只有logging.file生效
+		默认情况下，日志文件的大小达到10MB时会切分一次，产生新的日志文件，默认级别为：ERROR、WARN、INFO
+
+       参考： https://blog.csdn.net/gwd1154978352/article/details/78344091
+	 -->
+
+
+	<!-- spring boot logging 的基础配置 保证Spring Boot原始的日志配置不被覆盖-->
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+	<springProperty scope="context" name="springAppName" source="spring.application.name" />
+
+	<springProperty defaultValue="INFO" name="bizLevel" scope="context" source="logging.level.biz"/>
+
+	<springProperty scope="context" name="LOG_ROOT_PATH" source="logging.path" />
+
+	<property name="FILE_PATH" value="${LOG_ROOT_PATH}"/>
+	<property name="ERROR_FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS}|{%m} %n"/>
+	<property name="CONSOLE_LOG_PATTERN"    value="%-20(%d) %-5level[%thread] %c [%L] - %msg%n"/>
+
+
+
+	<!-- 文件保存路径配置 -->
+	<property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}" />
+
+	<!-- appender用来格式化日志输出节点，有俩个属性name和class，class用来指定哪种输出策略，常用就是控制台输出策略和文件输出策略。 -->
+
+	<!-- 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <encoder>表示对日志进行编码 -->
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %green([%thread]) %highlight(%-5level) %cyan(%logger{50}) - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<!-- Minimum logging level to be presented in the console logs -->
+			<level>debug</level>
+		</filter>
+		<!-- <encoder>表示对日志进行编码 -->
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<!-- Appender to log to file 打印normal日志 -->
+	<appender name="flatfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/normal/${springAppName}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} ${PID:- }
+				[${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]
+				%-5level [%thread] %logger{36} - %msg%n</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="maidian" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/maidian/${springAppName}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} ${PID:- }
+				[${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]
+				%-5level [%thread] %logger{36} - %msg%n</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+
+	<!-- 其他自定义业务划分日志 -->
+	<appender name="BIZ_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${FILE_PATH}/normal/biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${FILE_PATH}/normal/biz.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>${MAX_HISTORY:-7}</maxHistory>
+		</rollingPolicy>
+		<append>true</append>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/normal/rt.log</file>
+		<!-- 循环政策：基于时间创建日志文件 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 按天回滚 daily -->
+			<!-- log.dir 在maven profile里配置 -->
+			<fileNamePattern>${LOG_PATH}/rt-%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<!-- 日志最大的历史 60天 -->
+			<maxHistory>60</maxHistory>
+			<!-- 日志命名:单个文件大于128MB 按照时间+自增i 生成log文件 -->
+			<fileNamePattern>${LOG_PATH}/rt-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILE_SIZE:-10MB}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- 最大保存时间：30天-->
+			<maxHistory>${MAX_HISTORY:-7}</maxHistory>
+		</rollingPolicy>
+		<append>true</append>
+		<!-- 日志格式 -->
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 错误日志，只打印ERROR级别未处理异常堆栈跟踪日志：用于报警通知-->
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${FILE_PATH}/normal/error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${FILE_PATH}/normal/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>${MAX_HISTORY:-7}</maxHistory>
+		</rollingPolicy>
+		<append>true</append>
+		<encoder>
+			<pattern>${ERROR_FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<!-- 日志级别过滤器 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!-- 过滤的级别 -->
+			<level>ERROR</level>
+			<!-- 匹配时的操作：接收（记录） -->
+			<onMatch>ACCEPT</onMatch>
+			<!-- 不匹配时的操作：拒绝（不记录） -->
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+
+
+	<!-- Appender to log to file in a JSON format -->
+	<!--<appender name="logstash" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/json/${springAppName}.%d{yyyy-MM-dd}.json</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<pattern>
+					<pattern>
+						{
+						"severity": "%level",
+						"service": "${springAppName:-}",
+						"trace": "%X{X-B3-TraceId:-}",
+						"span": "%X{X-B3-SpanId:-}",
+						"exportable": "%X{X-Span-Export:-}",
+						"pid": "${PID:-}",
+						"thread": "%thread",
+						"class": "%logger{40}",
+						"rest": "%message"
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+	</appender>-->
+
+
+
+	<logger name="maidian" additivity="true">
+		<appender-ref ref="maidian" />
+	</logger>
+
+	<!-- 根据环境来选择对应的日志配置， 想使用spring扩展profile支持，要以logback-spring.xml命名 -->
+
+	<!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+	<springProfile name="local,test1,test2,test3,test4,dev">
+
+		<!-- 配置与ELK中logstash的连接,https://github.com/logstash/logstash-logback-encoder -->
+		<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+			<destination>192.168.106.21:4567</destination>
+			<!--<destination>${logstashUrl}</destination>-->
+			<!-- encoder is required -->
+			<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+				<!-- "appname":"eureka" 的作用是指定创建索引的名字时用，并且在生成的文档中会多了这个字段  -->
+				<!--<customFields>{"appname":"eureka"}</customFields>-->
+			</encoder>
+		</appender>
+
+		<!-- 日志级别，输出info及以上日志 -->
+		<root level="INFO">
+			<appender-ref ref="console" />
+			<!--<appender-ref ref="logstash" />-->
+			<appender-ref ref="flatfile" />
+			<appender-ref ref="LOGSTASH" />
+		</root>
+	</springProfile>
+
+	<!-- 压测，预发，生产环境. 输出warn及以上日志 -->
+	<springProfile name="press,pre,prod">
+		<!-- 日志级别 -->
+		<root level="INFO">
+            <appender-ref ref="console" />
+			<!--<appender-ref ref="logstash" />-->
+			<appender-ref ref="flatfile" />
+		</root>
+	</springProfile>
+
+	<!--日志topic为biz，即 @Slf4j(topic = "biz") 或 LoggerFactory.getLogger("biz") 方式打印的日志-->
+	<logger additivity="false" level="${bizLevel}" name="biz">
+		<appender-ref ref="BIZ_FILE"/>
+		<appender-ref ref="console"/>
+	</logger>
+
+	<logger name="rt" level="INFO" additivity="false">
+		<appender-ref ref="RT_FILE"/>
+	</logger>
+
+	<logger name="error" level="INFO" additivity="false">
+		<appender-ref ref="ERROR_FILE"/>
+		<appender-ref ref="flatfile" />
+	</logger>
+
+</configuration>
