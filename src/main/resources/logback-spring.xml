@@ -244,4 +244,8 @@
 		<appender-ref ref="flatfile" />
 	</logger>
 
+	<logger name="io.lettuce.core.protocol" level="ERROR">
+		<appender-ref ref="ERROR_FILE" />
+	</logger>
+
 </configuration>
