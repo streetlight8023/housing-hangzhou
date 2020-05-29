@@ -55,7 +55,7 @@ public class LianjiaHourseController {
         LianjiaZoneSearchEnum[] values = LianjiaZoneSearchEnum.values();
         for (LianjiaZoneSearchEnum value : values) {
             lianjiaService.deleteZoneCache(value.getCode());
-            lianjiaService.getAllLianjiaHousecode(value.getCode());
+            lianjiaService.parseLianjiaDate(value.getCode());
         }
     }
 
