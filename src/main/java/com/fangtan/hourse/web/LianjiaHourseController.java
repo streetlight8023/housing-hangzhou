@@ -56,7 +56,7 @@ public class LianjiaHourseController {
         for (LianjiaZoneSearchEnum value : values) {
 //            lianjiaService.deleteZoneCache(value.getCode());
 //            lianjiaService.parseLianjiaDate(value.getCode());
-            lianjiaService.parseLianjiaDate("fuyang");
+            lianjiaService.parseLianjiaDate("xiacheng");
         }
     }
 
