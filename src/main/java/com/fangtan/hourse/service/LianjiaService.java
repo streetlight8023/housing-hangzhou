@@ -96,7 +96,7 @@ public class LianjiaService {
             Integer pageCount = new BigDecimal(totalCount / 30).setScale(5, BigDecimal.ROUND_UP).intValue();
             for (int i = 1; i < pageCount + 2; i++) {
                 set.addAll(getLianjiaHousecodeByPage(zone, i));
-                System.out.println("所有房源 add ... ");
+                System.out.println(zone+"所有房源 add ... ");
                 Thread.sleep(getRandomTime());
             }
         }
