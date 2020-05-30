@@ -54,7 +54,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         config.setMaxIdle(3);
         config.setMinIdle(1);
         config.setMaxTotal(3);
-        config.setMaxWaitMillis(1000);
+        config.setMaxWaitMillis(3000);
 
         LettucePoolingClientConfiguration poolingClientConfiguration = LettucePoolingClientConfiguration.builder().poolConfig(config).build();
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(standaloneConfiguration, poolingClientConfiguration);
