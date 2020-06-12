@@ -1,15 +1,15 @@
 package com.fangtan.hourse.web;
 
+import com.fangtan.hourse.config.CustomParam;
+import com.fangtan.hourse.domain.UserRegForm;
 import com.fangtan.hourse.service.LianjiaService;
 import com.fangtan.hourse.util.OkHttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -24,6 +24,17 @@ public class LoveMyHourseController {
 
     @Autowired
     private LianjiaService LianjiaService;
+
+
+
+
+    @PostMapping("/test/param")
+    public void getUserRegForm(@RequestBody @Valid  UserRegForm userRegForm) {
+        System.out.println(userRegForm.getEmail());
+        System.out.println(userRegForm.getGender());
+        System.out.println(userRegForm.getNickname());
+
+    }
 
 
     @GetMapping("/lovemyhourse/list")

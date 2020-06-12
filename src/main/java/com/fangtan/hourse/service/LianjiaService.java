@@ -167,6 +167,7 @@ public class LianjiaService {
         bizlogger.info("剩余数量 ={} ", allLianjiaHousecode.size());
         for (String hourseCode : allLianjiaHousecode) {
             if(Strings.isNullOrEmpty(hourseCode)){
+                bizlogger.info("房源编码为空");
                 continue;
             }
             List<LianjiaHourse> list = lianjiaHourseMapper.findByCode(hourseCode);
@@ -189,6 +190,7 @@ public class LianjiaService {
             }
             Thread.sleep(getRandomTime());
         }
+        bizlogger.info("解析结束");
         return null;
     }
 
