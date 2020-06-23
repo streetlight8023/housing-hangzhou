@@ -7,8 +7,8 @@
     values (#{zone,jdbcType=VARCHAR},
          #{count,jdbcType=INTEGER},
          #{dealType,jdbcType=VARCHAR},
-          now(),
-          now())
+         #{createTime},
+         #{createTime})
   </insert>
 
 

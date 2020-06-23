@@ -44,13 +44,17 @@ public class LoveMyHourseController {
 
     @GetMapping("/getHzHouseGovDate")
     public void getHzHouseGovDate(HttpServletRequest request) {
-        bizlogger.info("开始统计销量 远程ip为 （）",getIp(request));
+        bizlogger.info("开始统计销量 远程ip为={}",getIpAddr(request));
         okHttpUtil.getHZhourseGovData();
     }
 
 
-    public static String getIp(HttpServletRequest request) {
+    public static String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
+        // 多次反向代理后会有多个ip值，第一个ip才是真实ip
+        if(ip != null && !"".equals(ip) && ip.indexOf(",")!=-1) {
+            ip = ip.split(",")[0];
+        }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
@@ -58,10 +62,7 @@ public class LoveMyHourseController {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            ip = request.getHeader("X-Real-IP");
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
