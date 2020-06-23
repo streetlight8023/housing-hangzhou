@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -289,6 +290,7 @@ public class OkHttpUtil {
                         String text = divs.get(i).text();
                         String countStr = text.replaceAll("套", "");
                         hzZoneStatic.setCount(Integer.valueOf(countStr));
+                        hzZoneStatic.setCreateTime(LocalDateTime.now());
                         hzZoneStaticMapper.insert(hzZoneStatic);
                         list.add(hzZoneStatic);
                     }

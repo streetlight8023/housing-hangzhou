@@ -101,8 +101,8 @@
 	<appender name="BIZ_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${FILE_PATH}/normal/biz.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${FILE_PATH}/normal/biz.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
-			<maxHistory>${MAX_HISTORY:-7}</maxHistory>
+			<fileNamePattern>${FILE_PATH}/normal/%d{yyyy-MM-dd}-biz.log</fileNamePattern>
+			<maxHistory>${MAX_HISTORY:-20}</maxHistory>
 		</rollingPolicy>
 		<append>true</append>
 		<encoder>
@@ -155,38 +155,6 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 	</appender>
-
-
-
-	<!-- Appender to log to file in a JSON format -->
-	<!--<appender name="logstash" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/json/${springAppName}.%d{yyyy-MM-dd}.json</fileNamePattern>
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<timestamp>
-					<timeZone>UTC</timeZone>
-				</timestamp>
-				<pattern>
-					<pattern>
-						{
-						"severity": "%level",
-						"service": "${springAppName:-}",
-						"trace": "%X{X-B3-TraceId:-}",
-						"span": "%X{X-B3-SpanId:-}",
-						"exportable": "%X{X-Span-Export:-}",
-						"pid": "${PID:-}",
-						"thread": "%thread",
-						"class": "%logger{40}",
-						"rest": "%message"
-						}
-					</pattern>
-				</pattern>
-			</providers>
-		</encoder>
-	</appender>-->
 
 
 

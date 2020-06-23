@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e61730be-ff76-4096-b178-96e8e4f62bfd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/config/BaseException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/config/CustomParam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/config/CustomValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/domain/UserRegForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/web/LoveMyHourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/web/LoveMyHourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/web/LoveMyHourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/web/LoveMyHourseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-mapper/HzZoneStaticMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-mapper/HzZoneStaticMapper.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -259,7 +252,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java</url>
-          <line>322</line>
+          <line>324</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
