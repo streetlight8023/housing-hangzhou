@@ -177,7 +177,13 @@ public class LianjiaService {
                 lianjiaHourseMapper.offSale(hourseCode);
             }
             if (CollectionUtils.isEmpty(list)) {
-                lianjiaHourseMapper.insert(newLianjiaHourse);
+                try{
+                    lianjiaHourseMapper.insert(newLianjiaHourse);
+
+                }catch (Exception e){
+                    bizlogger.error("当前code为 ={} 插入异常",hourseCode,e);
+                    continue;
+                }
             }else{
                 LianjiaHourse oldLianjiaHourse = list.get(0);
                 if(oldLianjiaHourse!=null){
