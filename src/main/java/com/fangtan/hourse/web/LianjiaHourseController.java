@@ -54,7 +54,7 @@ public class LianjiaHourseController {
         bizlogger.info("执行 校验数据 是否存入 数据库 定时任务");
         LianjiaZoneSearchEnum[] values = LianjiaZoneSearchEnum.values();
         for (LianjiaZoneSearchEnum value : values) {
-//            lianjiaService.deleteZoneCache(value.getCode());
+            lianjiaService.deleteZoneCache(value.getCode());
             lianjiaService.parseLianjiaDate(value.getCode());
 //            lianjiaService.parseLianjiaDate("gongshu");
         }
