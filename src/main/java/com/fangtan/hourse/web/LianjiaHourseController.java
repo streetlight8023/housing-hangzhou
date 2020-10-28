@@ -31,6 +31,13 @@ public class LianjiaHourseController {
         return "i am alive";
     }
 
+    @GetMapping("/getTest")
+    public String getTest(String zone) {
+        bizlogger.info("进入"+zone);
+        return "i am alive"+zone;
+    }
+
+
     @GetMapping("/test")
     public void parseLianjiaDateForTest() {
         bizlogger.info("进入");
