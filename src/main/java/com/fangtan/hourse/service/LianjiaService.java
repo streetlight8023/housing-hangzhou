@@ -114,7 +114,7 @@ public class LianjiaService {
         for (int i = 1; i < pageCount + 2; i++) {
             set.addAll(getLianjiaHousecodeByPageLess500(zone, i));
             System.out.println("500万以下的房子  add ... ");
-            Thread.sleep(getRandomTime());
+            Thread.sleep(getFastRandomTime());
         }
         return set;
     }
@@ -126,7 +126,7 @@ public class LianjiaService {
         for (int i = 1; i < pageCount + 2; i++) {
             set.addAll(getLianjiaHousecodeByPageMore500(zone, i));
             System.out.println("500万以上的房子  add ... ");
-            Thread.sleep(getRandomTime());
+            Thread.sleep(getFastRandomTime());
         }
         return set;
     }
@@ -141,15 +141,21 @@ public class LianjiaService {
         for (int i = 1; i < pageCount + 2; i++) {
             set.addAll(getLianjiaHousecodeByPageByRange(zone, i,range));
             System.out.println(range+"  add ... ");
-            Thread.sleep(getRandomTime());
+            Thread.sleep(getFastRandomTime());
         }
         return set;
     }
 
     public static Long getRandomTime() {
         Random random = new Random();
-        int i = random.nextInt(10);
+        int i = random.nextInt(1000);
         return 1900L + i;
+    }
+
+    public static Long getFastRandomTime() {
+        Random random = new Random();
+        int i = random.nextInt(100);
+        return 1200L + i;
     }
 
 
@@ -248,7 +254,7 @@ public class LianjiaService {
         Document document = requestLianjia(url);
         LianjiaHourse lianjiaHourse = new LianjiaHourse();
         try {
-            lianjiaHourse.setZone(LianjiaZoneSearchEnum.getNameByCode(zone));
+            lianjiaHourse.setZone(zone);
             lianjiaHourse.setHousecode(code);
             lianjiaHourse.setHourseTitle(document.select("h1[class=main]").get(0).text());
             Element priceElement = document.select("div[class=price]").get(0);
