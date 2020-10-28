@@ -9,6 +9,7 @@ public enum LianjiaZoneSearchEnum {
 
 //    SHANG_CHENG("shangcheng", "上城"),
 //    XIA_CHENG("xiacheng", "下城"),
+
 //    XI_HU("xihu", "西湖"),
     BIN_JIANG("binjiang", "滨江"),
 //    GONG_SHU("gongshu", "拱墅"),
