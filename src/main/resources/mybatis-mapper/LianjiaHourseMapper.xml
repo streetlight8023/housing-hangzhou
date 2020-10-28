@@ -67,6 +67,10 @@
     </select>
 
 
+    <select id="findByZone" resultType="com.fangtan.hourse.domain.LianjiaHourse">
+        SELECT * from lianjia_hourse where zone = #{zone}order by id desc
+    </select>
+
     <select id="findByCode" resultType="com.fangtan.hourse.domain.LianjiaHourse">
         SELECT * from lianjia_hourse where house_code = #{housecode};
     </select>

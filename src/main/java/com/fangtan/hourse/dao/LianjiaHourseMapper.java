@@ -20,6 +20,8 @@ public interface LianjiaHourseMapper {
 
     List<LianjiaHourse> findByCode(@Param("housecode") String housecode);
 
+    List<LianjiaHourse> findByZone(@Param("zone") String zone);
+
     void updateNowPrice(LianjiaHourse LianjiaHourse);
 
     void offSale(@Param("housecode") String housecode);

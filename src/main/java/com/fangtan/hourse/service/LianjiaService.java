@@ -42,6 +42,7 @@ public class LianjiaService {
     private IRedisCache redisCache;
 
 
+
 //    public static void main(String[] args) {
 //        String pinyinZone = StringUtils.getPingYin("dajiangdong1");
 //        System.out.println("pinyinZone "+pinyinZone);
@@ -105,7 +106,7 @@ public class LianjiaService {
         return set;
     }
 
-    public static Set<String> getAllLianjiaHousecodeLess500(String zone) throws InterruptedException {
+    public  Set<String> getAllLianjiaHousecodeLess500(String zone) throws InterruptedException {
         Integer totalCount = getLianjiaTotalCountLess500(zone);
         Integer pageCount = new BigDecimal(totalCount / 30).setScale(5, BigDecimal.ROUND_UP).intValue();
         Set<String> set = Sets.newHashSet();
@@ -117,7 +118,7 @@ public class LianjiaService {
         return set;
     }
 
-    public static Set<String> getAllLianjiaHousecodeMore500(String zone) throws InterruptedException {
+    public  Set<String> getAllLianjiaHousecodeMore500(String zone) throws InterruptedException {
         Integer totalCount = getLianjiaTotalCountMore500(zone);
         Integer pageCount = new BigDecimal(totalCount / 30).setScale(5, BigDecimal.ROUND_UP).intValue();
         Set<String> set = Sets.newHashSet();
@@ -129,7 +130,7 @@ public class LianjiaService {
         return set;
     }
 
-    public static Set<String> getAllLianjiaHousecodeByRange(String zone,String range) throws InterruptedException {
+    public  Set<String> getAllLianjiaHousecodeByRange(String zone,String range) throws InterruptedException {
         Integer totalCount = getLianjiaTotalCountByRange(zone,range);
         if(totalCount<1){
             return new HashSet<>();
@@ -162,7 +163,7 @@ public class LianjiaService {
         String prefix = "https://hz.lianjia.com/ershoufang/";
         Set<String> allLianjiaHousecode = getAllLianjiaHousecode(zone);
         bizlogger.info("原始数量 ={}", allLianjiaHousecode.size());
-        Set<String> existHourseSet = lianjiaHourseMapper.findAll().stream().map(LianjiaHourse::getHousecode).collect(Collectors.toSet());
+        Set<String> existHourseSet = lianjiaHourseMapper.findByZone(zone).stream().map(LianjiaHourse::getHousecode).collect(Collectors.toSet());
         allLianjiaHousecode.removeAll(existHourseSet);
         bizlogger.info("剩余数量 ={} ", allLianjiaHousecode.size());
         for (String hourseCode : allLianjiaHousecode) {
@@ -170,9 +171,14 @@ public class LianjiaService {
                 bizlogger.info("房源编码为空");
                 continue;
             }
+
             List<LianjiaHourse> list = lianjiaHourseMapper.findByCode(hourseCode);
             String url = prefix + hourseCode + ".html";
             LianjiaHourse newLianjiaHourse = parse(url, hourseCode, zone);
+            if(Strings.isNullOrEmpty(newLianjiaHourse.getSubZone())){
+                bizlogger.info("房源获取失败 当前请求url ={}",url);
+                continue;
+            }
             if(newLianjiaHourse==null){
                 lianjiaHourseMapper.offSale(hourseCode);
             }
@@ -237,7 +243,7 @@ public class LianjiaService {
         lianjiaHourseMapper.insert(test);
     }
 
-    public static LianjiaHourse parse(String url, String code, String zone) {
+    public  LianjiaHourse parse(String url, String code, String zone) {
         Document document = requestLianjia(url);
         LianjiaHourse lianjiaHourse = new LianjiaHourse();
         try {
@@ -339,7 +345,7 @@ public class LianjiaService {
      * @param page
      * @return
      */
-    public static List getLianjiaHousecodeByPage(String zone, Integer page) {
+    public  List getLianjiaHousecodeByPage(String zone, Integer page) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/pg" + page + "/";
         return getLianjiaHouseCodes(url);
@@ -352,7 +358,7 @@ public class LianjiaService {
      * @param page
      * @return
      */
-    public static List getLianjiaHousecodeByPageLess500(String zone, Integer page) {
+    public  List getLianjiaHousecodeByPageLess500(String zone, Integer page) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/pg" + page + "p1p2p3p4/";
         return getLianjiaHouseCodes(url);
@@ -366,14 +372,14 @@ public class LianjiaService {
      * @param page
      * @return
      */
-    public static List getLianjiaHousecodeByPageMore500(String zone, Integer page) {
+    public  List getLianjiaHousecodeByPageMore500(String zone, Integer page) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/pg" + page + "p5p6/";
         return getLianjiaHouseCodes(url);
 
     }
 
-    public static List getLianjiaHousecodeByPageByRange(String zone, Integer page,String range) {
+    public  List getLianjiaHousecodeByPageByRange(String zone, Integer page,String range) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/pg" + page +range+ "/";
         return getLianjiaHouseCodes(url);
@@ -381,7 +387,7 @@ public class LianjiaService {
     }
 
 
-    public static List getLianjiaHouseCodes(String url) {
+    public  List getLianjiaHouseCodes(String url) {
         List<String> list = Lists.newArrayList();
 
         Document document = requestLianjia(url);
@@ -395,31 +401,31 @@ public class LianjiaService {
     }
 
 
-    public static Integer getLianjiaTotalCount(String zone) {
+    public  Integer getLianjiaTotalCount(String zone) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/";
         return getAllLianjiaTotalCount(url);
     }
 
-    public static Integer getLianjiaTotalCountLess500(String zone) {
+    public  Integer getLianjiaTotalCountLess500(String zone) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/p1p2p3p4/";
         return getAllLianjiaTotalCount(url);
     }
 
-    public static Integer getLianjiaTotalCountMore500(String zone) {
+    public  Integer getLianjiaTotalCountMore500(String zone) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/p5p6/";
         return getAllLianjiaTotalCount(url);
     }
 
-    public static Integer getLianjiaTotalCountByRange(String zone,String range) {
+    public  Integer getLianjiaTotalCountByRange(String zone,String range) {
         String pinyinZone = StringUtils.getPingYin(zone);
         String url = "https://hz.lianjia.com/ershoufang/" + pinyinZone + "/"+range+"/";
         return getAllLianjiaTotalCount(url);
     }
 
-    public static Integer getAllLianjiaTotalCount(String url) {
+    public  Integer getAllLianjiaTotalCount(String url) {
         Integer totalCount = 0;
         Document document = requestLianjia(url);
         Elements elements = document.select("h2[class=total fl]");
@@ -437,8 +443,19 @@ public class LianjiaService {
         return totalCount;
     }
 
-    public static Document requestLianjia(String url) {
+    public  Document requestLianjia(String url) {
         OkHttpClient client = new OkHttpClient();
+        Object ssidObj = redisCache.get(RedisIndexEnum.INDEX_0, "ssid");
+        Object digv_extendsObj = redisCache.get(RedisIndexEnum.INDEX_0, "digv_extends");
+        String cookie="";
+        if(ssidObj!=null && digv_extendsObj!=null){
+            String ssid=String.valueOf(ssidObj);
+            String digv_extends=String.valueOf(digv_extendsObj);
+            cookie="lianjia_uuid=f21dc9c4-5f31-4469-88ae-04069cf591fe; _smt_uid=5eaa756d.cd03683; UM_distinctid=171c9dab35ebc1-0629d63bd7dc42-30607c00-13c680-171c9dab35f766; _ga=GA1.2.639112175.1588229488; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1602224899; select_city=330100; digv_extends="+digv_extends+"; lianjia_ssid="+ssid+"; _gid=GA1.2.1954693181.1603862853; CNZZDATA1253492436=136417260-1588225333-https%253A%252F%252Fwww.baidu.com%252F%7C1603866356; CNZZDATA1254525948=79133001-1588228309-https%253A%252F%252Fwww.baidu.com%252F%7C1603866789; cy_ip=60.191.79.194; CNZZDATA1255633284=725074903-1588228688-https%253A%252F%252Fwww.baidu.com%252F%7C1603867495; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22%24device_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_utm_source%22%3A%22baidu%22%2C%22%24latest_utm_medium%22%3A%22pinzhuan%22%2C%22%24latest_utm_campaign%22%3A%22wyhangzhou%22%2C%22%24latest_utm_content%22%3A%22biaotimiaoshu%22%2C%22%24latest_utm_term%22%3A%22biaoti%22%7D%7D; f-token=WVfq5FCfn8xsOxrAZLJCTu7Q9kGg1H9S8Hvse9XJUdb6paEZ+MqlXATjISEdsKt0Fqg7dgHLKUFp4rZMaP6anDgqpzsGCmlMzZHjw38tZZIZITyz4mYxM1PMEEd77+SYBtw=; CNZZDATA1255604082=1132291929-1588225809-https%253A%252F%252Fwww.baidu.com%252F%7C1603871304; _gat=1; _gat_past=1; _gat_global=1; _gat_new_global=1; _gat_dianpu_agent=1; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1603871490; srcid=eyJ0Ijoie1wiZGF0YVwiOlwiMTdlYjBiMWQzNmE0ZDQzNmZhMWNlYzFjNTFjYzg0YjgxZmM2NmE4NTVkNDcyNDViMGU3MzdmNGY5NmU1ZWE2Y2E0ZmFjMmFhZmUzOGFjZjRkNzJkY2MyMDJiZDkxYzQ1MWY2NzBlYWEzZTA3MjlmN2FmMDRhNmMwZTdlZWE5ZTkwMTlhM2NhZWVlNTc5MzQ3NDM3Y2QzMWNjNmIxNDFkYjc2MDhkMDM3YzlmMGNkMjZkZmI5OWNhMjQwNzM0NzZiMGE5MzliZmIwNzczNzIzN2ZlYzJiN2NkOTY3MWI1YmRkYmFjNGE2MmQ2MGJmMmUwZTUzOWJhNDM3NmE2MTM5OTk0Mzg5YTNlN2RiNmU1N2NjYzI0OWM5N2E3MjRjMzg3MWM5M2Q2MDI2OWZjYWI2MmExODk5ZmJhZWQ2YzRlYzY4MzU3OTMyMjAxOWE2NjcyODc0NTM1ZTQ0NzgzNzYwMlwiLFwia2V5X2lkXCI6XCIxXCIsXCJzaWduXCI6XCI5YjdlOWE3MlwifSIsInIiOiJodHRwczovL2h6LmxpYW5qaWEuY29tL2Vyc2hvdWZhbmcvMTAzMTEwOTQyNjI3Lmh0bWwiLCJvcyI6IndlYiIsInYiOiIwLjEifQ==";
+        }else{
+            cookie="lianjia_uuid=f21dc9c4-5f31-4469-88ae-04069cf591fe; _smt_uid=5eaa756d.cd03683; UM_distinctid=171c9dab35ebc1-0629d63bd7dc42-30607c00-13c680-171c9dab35f766; _ga=GA1.2.639112175.1588229488; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1602224899; select_city=330100; digv_extends=%7B%22utmTrackId%22%3A%2221583074%22%7D; lianjia_ssid=5ffea509-3bfc-48b8-b417-b80e1e244b69; _gid=GA1.2.1954693181.1603862853; CNZZDATA1253492436=136417260-1588225333-https%253A%252F%252Fwww.baidu.com%252F%7C1603866356; CNZZDATA1254525948=79133001-1588228309-https%253A%252F%252Fwww.baidu.com%252F%7C1603866789; cy_ip=60.191.79.194; CNZZDATA1255633284=725074903-1588228688-https%253A%252F%252Fwww.baidu.com%252F%7C1603867495; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22%24device_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_utm_source%22%3A%22baidu%22%2C%22%24latest_utm_medium%22%3A%22pinzhuan%22%2C%22%24latest_utm_campaign%22%3A%22wyhangzhou%22%2C%22%24latest_utm_content%22%3A%22biaotimiaoshu%22%2C%22%24latest_utm_term%22%3A%22biaoti%22%7D%7D; f-token=WVfq5FCfn8xsOxrAZLJCTu7Q9kGg1H9S8Hvse9XJUdb6paEZ+MqlXATjISEdsKt0Fqg7dgHLKUFp4rZMaP6anDgqpzsGCmlMzZHjw38tZZIZITyz4mYxM1PMEEd77+SYBtw=; CNZZDATA1255604082=1132291929-1588225809-https%253A%252F%252Fwww.baidu.com%252F%7C1603871304; _gat=1; _gat_past=1; _gat_global=1; _gat_new_global=1; _gat_dianpu_agent=1; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1603871490; srcid=eyJ0Ijoie1wiZGF0YVwiOlwiMTdlYjBiMWQzNmE0ZDQzNmZhMWNlYzFjNTFjYzg0YjgxZmM2NmE4NTVkNDcyNDViMGU3MzdmNGY5NmU1ZWE2Y2E0ZmFjMmFhZmUzOGFjZjRkNzJkY2MyMDJiZDkxYzQ1MWY2NzBlYWEzZTA3MjlmN2FmMDRhNmMwZTdlZWE5ZTkwMTlhM2NhZWVlNTc5MzQ3NDM3Y2QzMWNjNmIxNDFkYjc2MDhkMDM3YzlmMGNkMjZkZmI5OWNhMjQwNzM0NzZiMGE5MzliZmIwNzczNzIzN2ZlYzJiN2NkOTY3MWI1YmRkYmFjNGE2MmQ2MGJmMmUwZTUzOWJhNDM3NmE2MTM5OTk0Mzg5YTNlN2RiNmU1N2NjYzI0OWM5N2E3MjRjMzg3MWM5M2Q2MDI2OWZjYWI2MmExODk5ZmJhZWQ2YzRlYzY4MzU3OTMyMjAxOWE2NjcyODc0NTM1ZTQ0NzgzNzYwMlwiLFwia2V5X2lkXCI6XCIxXCIsXCJzaWduXCI6XCI5YjdlOWE3MlwifSIsInIiOiJodHRwczovL2h6LmxpYW5qaWEuY29tL2Vyc2hvdWZhbmcvMTAzMTEwOTQyNjI3Lmh0bWwiLCJvcyI6IndlYiIsInYiOiIwLjEifQ==";
+        }
+
         Request request = new Request.Builder().
                 url(url)
                 .addHeader("Host", "hz.lianjia.com")
@@ -449,11 +466,33 @@ public class LianjiaService {
                 .addHeader("Cache-Control", "no-cache")
                 .addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36")
                 .addHeader("Referer", "https://hz.lianjia.com/ershoufang/")
-                .addHeader("Cookie", "TY_SESSION_ID=ab50bb81-aa69-4041-bb13-fb3433ce2813; lianjia_uuid=f21dc9c4-5f31-4469-88ae-04069cf591fe; _smt_uid=5eaa756d.cd03683; UM_distinctid=171c9dab35ebc1-0629d63bd7dc42-30607c00-13c680-171c9dab35f766; _ga=GA1.2.639112175.1588229488; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1587090290,1588229490; select_city=330100; digv_extends=%7B%22utmTrackId%22%3A%2221583074%22%7D; CNZZDATA1253492436=136417260-1588225333-https%253A%252F%252Fwww.baidu.com%252F%7C1588742653; _gid=GA1.2.692935554.1588744607; CNZZDATA1254525948=79133001-1588228309-https%253A%252F%252Fwww.baidu.com%252F%7C1588744647; CNZZDATA1255604082=1132291929-1588225809-https%253A%252F%252Fwww.baidu.com%252F%7C1588744804; lianjia_ssid=3376813f-d118-409a-82ec-0ce53b32961c; CNZZDATA1255633284=725074903-1588228688-https%253A%252F%252Fwww.baidu.com%252F%7C1588745695; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1588746786; srcid=eyJ0Ijoie1wiZGF0YVwiOlwiYmU4ZjA2ZGQ1YjI3NDljNzNjNDU1Y2UwYmUxMDdmODVkNGI5ZDcxMGY4YWI2MGQwZjVjZThkMjEwNzZhMTQ1YjQ3NzljM2UyNTBmN2RjNTgzYWQ1YTkyNmI4OWZhMGQ1NTZkMjQ3ZmI4NDliNGNlOTc4M2RjYTRjMjNmNGQ3MGY3ZTU5MjI2MTAwYjlmNmRmNWRkNzkzOGNkZjBhNDg1OThkOTk0YjU5NGNkY2E2NWU1YTA4OTJmNDNlY2IxYjZmZmQxNGZjNjczZjcwZWRhMTgwMDcxZTYzMmFkNjg2ZTgxODkxMzQzOTljYmRjMDkyNTFkNjI2NDI5Y2Y0MzY1YzE0ZWY0YTA3OWJhMGZjY2M5YzlkMzdlMGEwNDJiZGNhY2JmNmQyM2VjNDRiNjM2OWM1MDU5MjhkOTU5NTJkYWE1Yzc5OGFmYmE5YzMzY2RkMmRjYjQ4M2I0Mzc0ZmE0M1wiLFwia2V5X2lkXCI6XCIxXCIsXCJzaWduXCI6XCI5NzE4NjQ1MlwifSIsInIiOiJodHRwczovL2h6LmxpYW5qaWEuY29tL2Vyc2hvdWZhbmcvYmluamlhbmcvcGcyLyIsIm9zIjoid2ViIiwidiI6IjAuMSJ9; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22%24device_id%22%3A%22171c9dab4fce90-0840ef442be061-30607c00-1296000-171c9dab4fdaee%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_utm_source%22%3A%22baidu%22%2C%22%24latest_utm_medium%22%3A%22pinzhuan%22%2C%22%24latest_utm_campaign%22%3A%22wyhangzhou%22%2C%22%24latest_utm_content%22%3A%22biaotimiaoshu%22%2C%22%24latest_utm_term%22%3A%22biaoti%22%7D%7D")
+                .addHeader("Cookie", cookie)
                 .build();
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
+                List<String> headers = response.headers("Set-Cookie");
+                if(headers.size()>0){
+                    for (String cookies : headers) {
+                        String[] split = cookies.split(";");
+                        if(split.length>0){
+                            if(split[0].contains("ssid")){
+                                String[] strs = split[0].split("=");
+                                if(strs.length>1){
+                                    bizlogger.info("current ssid ={}",strs[1]);
+                                    redisCache.set(RedisIndexEnum.INDEX_0,"ssid",strs[1],RedisExpireEnum.EXPIRE_10M);
+                                }
+                            }
+                        }
+                        if(split[0].contains("extends")){
+                            String[] strs = split[0].split("=");
+                            if(strs.length>1){
+                                bizlogger.info("current extends ={}",strs[1]);
+                                redisCache.set(RedisIndexEnum.INDEX_0,"digv_extends",strs[1],RedisExpireEnum.EXPIRE_10M);
+                            }
+                        }
+                    }
+                }
                 String html = response.body().string();
                 return Jsoup.parse(html);
             }
