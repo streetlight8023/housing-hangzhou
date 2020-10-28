@@ -38,7 +38,7 @@ public class LianjiaHourseController {
     }
 
     @GetMapping("/lianjia/get")
-    public void parseLianjiaDate(@RequestParam("zone")String zone) throws InterruptedException {
+    public void parseLianjiaDate(String zone) throws InterruptedException {
         bizlogger.info("进入");
         lianjiaService.parseLianjiaDate(zone);
     }

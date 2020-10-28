@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.fangtan.hourse.dao.LianjiaHourseMapper;
 import com.fangtan.hourse.domain.LianjiaHourse;
 import com.fangtan.hourse.enumConfig.LianjiaSearchEnum;
+import com.fangtan.hourse.enumConfig.LianjiaZoneSearchEnum;
 import com.fangtan.hourse.enumConfig.RedisExpireEnum;
 import com.fangtan.hourse.enumConfig.RedisIndexEnum;
 import com.fangtan.hourse.redis.IRedisCache;
@@ -247,7 +248,7 @@ public class LianjiaService {
         Document document = requestLianjia(url);
         LianjiaHourse lianjiaHourse = new LianjiaHourse();
         try {
-            lianjiaHourse.setZone(zone);
+            lianjiaHourse.setZone(LianjiaZoneSearchEnum.getNameByCode(zone));
             lianjiaHourse.setHousecode(code);
             lianjiaHourse.setHourseTitle(document.select("h1[class=main]").get(0).text());
             Element priceElement = document.select("div[class=price]").get(0);

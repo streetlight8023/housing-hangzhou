@@ -1,6 +1,10 @@
 package com.fangtan.hourse.enumConfig;
 
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+
 public enum LianjiaZoneSearchEnum {
 
     SHANG_CHENG("shangcheng", "上城"),
@@ -27,6 +31,12 @@ public enum LianjiaZoneSearchEnum {
     public String getCode() {
         return code;
     }
+
+    public static String getNameByCode(String name) {
+        return Arrays.stream(LianjiaZoneSearchEnum.values()).filter(x -> x.getCode().equals(name)).findFirst()
+                .map(LianjiaZoneSearchEnum::getDesc).orElse(StringUtils.EMPTY);
+    }
+
 
     public void setIndex(String code) {
         this.code = code;
