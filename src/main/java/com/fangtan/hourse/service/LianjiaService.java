@@ -147,7 +147,7 @@ public class LianjiaService {
     public static Long getRandomTime() {
         Random random = new Random();
         int i = random.nextInt(10);
-        return 900L + i;
+        return 1900L + i;
     }
 
 
