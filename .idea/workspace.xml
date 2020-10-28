@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e61730be-ff76-4096-b178-96e8e4f62bfd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/web/LianjiaHourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/web/LianjiaHourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/web/LianjiaHourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/web/LianjiaHourseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/enumConfig/LianjiaZoneSearchEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
