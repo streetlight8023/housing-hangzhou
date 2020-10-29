@@ -487,7 +487,7 @@ public class LianjiaService {
                                 String[] strs = split[0].split("=");
                                 if(strs.length>1){
                                     bizlogger.info("current ssid ={}",strs[1]);
-                                    redisCache.set(RedisIndexEnum.INDEX_0,"ssid",strs[1],RedisExpireEnum.EXPIRE_10M);
+                                    redisCache.set(RedisIndexEnum.INDEX_0,"ssid",strs[1],RedisExpireEnum.EXPIRE_1D);
                                 }
                             }
                         }
@@ -495,7 +495,7 @@ public class LianjiaService {
                             String[] strs = split[0].split("=");
                             if(strs.length>1){
                                 bizlogger.info("current extends ={}",strs[1]);
-                                redisCache.set(RedisIndexEnum.INDEX_0,"digv_extends",strs[1],RedisExpireEnum.EXPIRE_10M);
+                                redisCache.set(RedisIndexEnum.INDEX_0,"digv_extends",strs[1],RedisExpireEnum.EXPIRE_1D);
                             }
                         }
                     }
