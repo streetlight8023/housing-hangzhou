@@ -182,6 +182,7 @@ public class LianjiaService {
             List<LianjiaHourse> list = lianjiaHourseMapper.findByCode(hourseCode);
             String url = prefix + hourseCode + ".html";
             LianjiaHourse newLianjiaHourse = parse(url, hourseCode, zone);
+            Thread.sleep(getRandomTime());
             if(Strings.isNullOrEmpty(newLianjiaHourse.getSubZone())){
                 bizlogger.info("房源获取失败 当前请求url ={}",url);
                 continue;
@@ -207,7 +208,6 @@ public class LianjiaService {
                     }
                 }
             }
-            Thread.sleep(getRandomTime());
         }
         bizlogger.info("解析结束");
         return null;
