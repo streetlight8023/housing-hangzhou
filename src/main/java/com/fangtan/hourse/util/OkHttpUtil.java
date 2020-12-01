@@ -272,7 +272,8 @@ public class OkHttpUtil {
 
 
     public Document getHZhourseGovData() {
-        String url = "http://fgj.hangzhou.gov.cn/col/col1684617/index.html";
+//        String url = "http://fgj.hangzhou.gov.cn/col/col1684617/index.html";
+        String url = "http://fgj.hangzhou.gov.cn/col/col1229440802/index.html";
         Document hZhourseGovData = requestHZhourseGov(url);
         Element scrollBox11 = hZhourseGovData.getElementById("scrollBox1");
         Elements elements = scrollBox11.select("div[class=list-item hehe]");

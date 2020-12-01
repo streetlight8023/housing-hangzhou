@@ -194,10 +194,10 @@
     <list>
       <item itemvalue="Application.StarterApplication" />
       <item itemvalue="Application.LianjiaService" />
+      <item itemvalue="Application.TimeUtils" />
       <item itemvalue="Docker.Docker Image" />
       <item itemvalue="Docker.Dockerfile" />
       <item itemvalue="HTTP Request.rest-api_1#1" />
-      <item itemvalue="Application.TimeUtils" />
     </list>
     <recent_temporary>
       <list>
