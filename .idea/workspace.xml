@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e61730be-ff76-4096-b178-96e8e4f62bfd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/rx/RxJavaDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/hourse.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/service/LianjiaService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/DatePerPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/DatePerPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/HourseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/HourseInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/OkHttpUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/fangtan/hourse/util/OkHttpUtil.class" afterDir="false" />
-    </list>
+    <list default="true" id="e61730be-ff76-4096-b178-96e8e4f62bfd" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +248,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java</url>
-          <line>325</line>
+          <line>329</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
