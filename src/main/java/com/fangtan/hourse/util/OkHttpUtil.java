@@ -33,6 +33,8 @@ public class OkHttpUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(OkHttpUtil.class);
 
+    protected static Logger bizlogger = LoggerFactory.getLogger("biz");
+
     @Autowired
     private HzZoneStaticMapper hzZoneStaticMapper;
 
@@ -273,7 +275,8 @@ public class OkHttpUtil {
 
     public Document getHZhourseGovData() {
 //        String url = "http://fgj.hangzhou.gov.cn/col/col1684617/index.html";
-        String url = "https://api.hzfc.cn/hzfcweb_ifs/interaction/scxx";
+//        String url = "https://api.hzfc.cn/hzfcweb_ifs/interaction/scxx";
+        String url = "http://fgj.hangzhou.gov.cn/col/col1229440802/index.html";
         Document hZhourseGovData = requestHZhourseGov(url);
         Element scrollBox11 = hZhourseGovData.getElementById("scrollBox1");
         Elements elements = scrollBox11.select("div[class=list-item hehe]");
@@ -292,6 +295,7 @@ public class OkHttpUtil {
                         String countStr = text.replaceAll("套", "");
                         hzZoneStatic.setCount(Integer.valueOf(countStr));
                         hzZoneStatic.setCreateTime(LocalDateTime.now());
+                        bizlogger.info("搜集数据 当前={}",JSON.toJSONString(hzZoneStatic));
                         hzZoneStaticMapper.insert(hzZoneStatic);
                         list.add(hzZoneStatic);
                     }
