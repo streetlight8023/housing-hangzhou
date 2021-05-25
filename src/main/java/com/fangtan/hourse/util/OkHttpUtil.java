@@ -277,7 +277,8 @@ public class OkHttpUtil {
 //        String url = "http://fgj.hangzhou.gov.cn/col/col1684617/index.html";
 
 //        String url = "https://api.hzfc.cn/hzfcweb_ifs/interaction/scxx";
-        String url = "http://fgj.hangzhou.gov.cn/col/col1229440802/index.html";
+//        String url = "http://fgj.hangzhou.gov.cn/col/col1229440802/index.html";
+        String url = "https://api.hzfc.cn/hzfcweb_ifs/interaction/scxx";
         Document hZhourseGovData = requestHZhourseGov(url);
         Element scrollBox11 = hZhourseGovData.getElementById("scrollBox1");
         Elements elements = scrollBox11.select("div[class=list-item hehe]");
@@ -318,7 +319,7 @@ public class OkHttpUtil {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().
                 url(url)
-                .addHeader("Host", "fgj.hangzhou.gov.cn")
+                .addHeader("Host", "api.hzfc.cn")
                 .addHeader("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8")
                 .addHeader("Sec-Fetch-Mode", "navigate")
                 .addHeader("Sec-Fetch-Site", "same-origin")
