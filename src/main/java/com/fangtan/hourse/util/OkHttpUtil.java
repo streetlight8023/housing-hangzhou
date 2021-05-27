@@ -282,7 +282,7 @@ public class OkHttpUtil {
         Document hZhourseGovData = requestHZhourseGov(url);
         Element scrollBox11 = hZhourseGovData.getElementById("scrollBox1");
         Elements elements = scrollBox11.select("div[class=list-item hehe]");
-        List<HzZoneStatic> list = new ArrayList<>();
+        Set<HzZoneStatic> set = new HashSet<>();
         if (elements.size() > 0) {
             for (Element element : elements) {
                 Elements divs = element.getElementsByTag("div");
@@ -298,14 +298,17 @@ public class OkHttpUtil {
                         hzZoneStatic.setCount(Integer.valueOf(countStr));
                         hzZoneStatic.setCreateTime(LocalDateTime.now());
                         bizlogger.info("搜集数据 当前={}",JSON.toJSONString(hzZoneStatic));
-                        hzZoneStaticMapper.insert(hzZoneStatic);
-                        list.add(hzZoneStatic);
+                        set.add(hzZoneStatic);
                     }
                 }
             }
         }
-        String s = JSON.toJSONString(list);
-        System.out.println(s);
+        for (HzZoneStatic hzZoneStatic : set) {
+            bizlogger.info("搜集数据 当前={}",JSON.toJSONString(hzZoneStatic));
+            hzZoneStaticMapper.insert(hzZoneStatic);
+        }
+        String s = JSON.toJSONString(set);
+        bizlogger.info(s);
         return null;
     }
 
