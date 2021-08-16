@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e61730be-ff76-4096-b178-96e8e4f62bfd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/domain/HzZoneStatic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/domain/HzZoneStatic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
