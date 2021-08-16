@@ -39,8 +39,12 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/fangtan/hourse" />
+      <recent name="$PROJECT_DIR$/src/main/resources/mybatis-mapper" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.fangtan.hourse.config" />
@@ -49,12 +53,8 @@
       <recent name="com.fangtan.hourse.enumConfig" />
       <recent name="com.fangtan.hourse.util" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/com/fangtan/hourse/enumConfig" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/fangtan/hourse" />
-      <recent name="$PROJECT_DIR$/src/main/resources/mybatis-mapper" />
-      <recent name="$PROJECT_DIR$/src/main/resources/static" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RestClientSettings">
