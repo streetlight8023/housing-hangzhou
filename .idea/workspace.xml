@@ -270,17 +270,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java</url>
-          <line>338</line>
+          <line>339</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java</url>
-          <line>337</line>
+          <line>338</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fangtan/hourse/util/OkHttpUtil.java</url>
-          <line>334</line>
+          <line>335</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>

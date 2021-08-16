@@ -305,7 +305,7 @@ public class OkHttpUtil {
         }
         bizlogger.info("搜集数据 当前集合={}",JSON.toJSONString(set));
         for (HzZoneStatic hzZoneStatic : set) {
-            bizlogger.info("搜集数据 当前={}",JSON.toJSONString(hzZoneStatic));
+            bizlogger.info("搜集数据 准备插入={}",JSON.toJSONString(hzZoneStatic));
             hzZoneStaticMapper.insert(hzZoneStatic);
         }
         String s = JSON.toJSONString(set);
