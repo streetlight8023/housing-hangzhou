@@ -1,0 +1,30 @@
+info:
+  name: 房源系统
+  contact: fang
+
+#指定当前服务访问端口
+server:
+  port: 8082
+
+#申明当前应用名称
+spring:
+  application:
+    name: hourse
+
+#配置mybatis相关文件位置
+mybatis:
+  mapper-locations: classpath*:mybatis-mapper/*
+  config-location: classpath:mybatis-config.xml
+  #扫描domain的包名
+  aliasesPackage: com.fangtan.hourse.domain
+
+
+#log配置
+logging:
+  config: classpath:logback-spring.xml
+  path: ${user.home}/logs/${spring.application.name}
+  level:
+    com.ald.ishangjie: DEBUG
+    com.ibatis: DEBUG
+
+
