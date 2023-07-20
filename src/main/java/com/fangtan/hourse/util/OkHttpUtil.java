@@ -323,7 +323,7 @@ public class OkHttpUtil {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().
                 url(url)
-                .addHeader("Host", "api.hzfc.cn")
+                .addHeader("Host", "zwfw.fgj.hangzhou.gov.cn")
                 .addHeader("Accept-Language", "zh-CN,zh;q=0.9,en;q=0.8")
                 .addHeader("Sec-Fetch-Mode", "navigate")
                 .addHeader("Sec-Fetch-Site", "same-origin")
